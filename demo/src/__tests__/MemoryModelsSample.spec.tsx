@@ -18,9 +18,7 @@ const { SAMPLES } = await import("../sample/index.js");
 import { renderWithI18n } from "../setup-jest";
 
 describe("MemoryModelsSample", () => {
-    const setTextDataMock = jest.fn();
-    const queueDebouncedTextDataMock = jest.fn();
-    const flushDebouncedTextDataMock = jest.fn();
+    const onSubmitMock = jest.fn();
     let nextState;
     let setConfigDataMock;
 
@@ -32,10 +30,8 @@ describe("MemoryModelsSample", () => {
         render(
             renderWithI18n(
                 <MemoryModelsSample
-                    setTextData={setTextDataMock}
                     setConfigData={setConfigDataMock}
-                    queueDebouncedTextData={queueDebouncedTextDataMock}
-                    flushDebouncedTextData={flushDebouncedTextDataMock}
+                    onSubmit={onSubmitMock}
                 />
             )
         );
@@ -67,13 +63,9 @@ describe("MemoryModelsSample", () => {
 
         // Wait for state updates and side effects to complete
         await waitFor(() => {
-            expect(setTextDataMock).toHaveBeenCalledWith(
+            expect(onSubmitMock).toHaveBeenCalledWith(
                 JSON.stringify({ sample: "manualLayout" }, null, 4)
             );
-            expect(queueDebouncedTextDataMock).toHaveBeenCalledWith(
-                JSON.stringify({ sample: "manualLayout" }, null, 4)
-            );
-            expect(flushDebouncedTextDataMock).toHaveBeenCalledTimes(1);
             expect(nextState).toEqual({
                 config: "config",
                 overallDrawConfig: {},

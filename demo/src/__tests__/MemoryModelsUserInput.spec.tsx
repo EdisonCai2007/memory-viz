@@ -19,8 +19,7 @@ describe("MemoryModelsUserInput", () => {
         },
     };
     const setConfigDataMock = jest.fn();
-    const queueDebouncedTextDataMock = jest.fn();
-    const flushDebouncedTextDataMock = jest.fn();
+    const onSubmitMock = jest.fn();
     const failureBannerMock = "";
     let textDataMock: string;
 
@@ -38,8 +37,7 @@ describe("MemoryModelsUserInput", () => {
                     failureBanner={failureBannerMock}
                     configData={configDataMock}
                     setConfigData={setConfigDataMock}
-                    queueDebouncedTextData={queueDebouncedTextDataMock}
-                    flushDebouncedTextData={flushDebouncedTextDataMock}
+                    onSubmit={onSubmitMock}
                 />
             )
         );
@@ -58,8 +56,7 @@ describe("MemoryModelsUserInput", () => {
                     failureBanner={failureBannerMock}
                     configData={configDataMock}
                     setConfigData={setConfigDataMock}
-                    queueDebouncedTextData={queueDebouncedTextDataMock}
-                    flushDebouncedTextData={flushDebouncedTextDataMock}
+                    onSubmit={onSubmitMock}
                 />
             )
         );
@@ -78,8 +75,7 @@ describe("MemoryModelsUserInput", () => {
                     failureBanner={failureBannerMock}
                     configData={configDataMock}
                     setConfigData={setConfigDataMock}
-                    queueDebouncedTextData={queueDebouncedTextDataMock}
-                    flushDebouncedTextData={flushDebouncedTextDataMock}
+                    onSubmit={onSubmitMock}
                 />
             )
         );
@@ -103,8 +99,7 @@ describe("MemoryModelsUserInput", () => {
                         failureBanner={failureBannerMock}
                         configData={configDataMock}
                         setConfigData={setConfigDataMock}
-                        queueDebouncedTextData={queueDebouncedTextDataMock}
-                        flushDebouncedTextData={flushDebouncedTextDataMock}
+                        onSubmit={onSubmitMock}
                     />
                 )
             );
@@ -127,8 +122,7 @@ describe("MemoryModelsUserInput", () => {
                         failureBanner={failureBannerMock}
                         configData={configDataMock}
                         setConfigData={setConfigDataMock}
-                        queueDebouncedTextData={queueDebouncedTextDataMock}
-                        flushDebouncedTextData={flushDebouncedTextDataMock}
+                        onSubmit={onSubmitMock}
                     />
                 )
             );
@@ -156,7 +150,7 @@ describe("MemoryModelsUserInput", () => {
             expect(reapplyBtn).toHaveProperty("disabled", true);
         });
 
-        it("calls console error and setTextData when file upload fails", async () => {
+        it("calls console error when file upload fails", async () => {
             const mockErrorMessage = "Mock error message";
             jest.spyOn(global, "FileReader").mockImplementationOnce(() => {
                 throw new Error(mockErrorMessage);
@@ -183,7 +177,7 @@ describe("MemoryModelsUserInput", () => {
                 1,
                 `Error reading uploaded file as text. Please ensure it's in UTF-8 encoding: ${mockErrorMessage}`
             );
-            expect(setTextDataMock).toHaveBeenNthCalledWith(1, null);
+            expect(onSubmitMock).not.toHaveBeenCalled();
         });
 
         describe("when a file is uploaded", () => {
@@ -208,7 +202,7 @@ describe("MemoryModelsUserInput", () => {
                 });
             });
 
-            it("clicking reapply button calls setTextData", async () => {
+            it("clicking reapply button calls onSubmit", async () => {
                 const reapplyBtn = screen.getByTestId(
                     "file-input-reapply-button"
                 );
@@ -222,11 +216,7 @@ describe("MemoryModelsUserInput", () => {
                 await waitFor(() => {
                     // if put within the same waitFor block as fireEvent.click(reapplyBtn), this test always passes
                     // even with the wrong expect
-                    expect(setTextDataMock).toHaveBeenCalledWith(fileString);
-                    expect(queueDebouncedTextDataMock).toHaveBeenCalledWith(
-                        fileString
-                    );
-                    expect(flushDebouncedTextDataMock).toHaveBeenCalledTimes(1);
+                    expect(onSubmitMock).toHaveBeenCalledWith(fileString);
                 });
             });
 
@@ -275,8 +265,7 @@ describe("MemoryModelsUserInput", () => {
                         failureBanner={failureBannerMock}
                         configData={configDataMock}
                         setConfigData={setConfigDataMock}
-                        queueDebouncedTextData={queueDebouncedTextDataMock}
-                        flushDebouncedTextData={flushDebouncedTextDataMock}
+                        onSubmit={onSubmitMock}
                     />
                 )
             );
