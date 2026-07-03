@@ -2150,9 +2150,12 @@ export class MemoryModel {
 
                 function addEventListeners() {
                     document.querySelectorAll('text.id').forEach(idText => {
-                        const idValue = idText.textContent.trim();
-                        if (!idValue || !idValue.startsWith('id')) {
-                            return;
+                        const textNode = Array.from(idText.childNodes).find(
+                            node => node.nodeType === Node.TEXT_NODE
+                        );
+                        const idValue = textNode?.nodeValue?.trim() ?? '';
+                        if (!idValue) {
+                           return;
                         }
 
                         idText.addEventListener('mouseover', () => {

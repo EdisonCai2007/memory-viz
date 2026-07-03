@@ -1476,6 +1476,28 @@ describe("draw function", () => {
         expect(nonInteractiveSvg).toMatchSnapshot();
     });
 
+    it("script correctly extracts id key from text element's first TEXT_NODE child", () => {
+        const model: InstanceType<typeof exports.MemoryModel> = draw(
+            [{ type: "int", id: 13, value: 7 }],
+            {
+                width: 1300,
+                interactive: true,
+            }
+        );
+
+        const textElements = Array.from(model.svg.getElementsByTagName("text"));
+        const idTextElement = textElements.find(
+            (el) => el.getAttribute("class") === "id"
+        );
+        expect(idTextElement).toBeDefined();
+
+        const textNode = Array.from(idTextElement!.childNodes).find(
+            (node) => node.nodeType === idTextElement!.ownerDocument!.TEXT_NODE
+        );
+        expect(textNode).toBeDefined();
+        expect(textNode!.nodeValue?.trim()).toBe("id13");
+    });
+
     test.each<{
         test: string;
         input: object[];
