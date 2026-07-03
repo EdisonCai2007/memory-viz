@@ -95,20 +95,9 @@ describe("App", () => {
             { timeout: 2000 }
         );
 
-        // Next, reset and input valid JSON that's also valid memory-viz JSON
-        const validJSON = JSON.stringify([
-            {
-                type: ".frame",
-                name: "__main__",
-                value: { lst1: 82, lst2: 84, p: 99, d: 10, t: 11 },
-            },
-            { type: "int", id: 82 },
-            { type: "int", id: 84 },
-            { type: "int", id: 99 },
-            { type: "int", id: 10 },
-            { type: "int", id: 11 },
-        ]);
-        fireEvent.change(input, { target: { value: validJSON } });
+        // Next, reset by selecting a sample input that's valid memory-viz JSON.
+        fireEvent.click(screen.getByText("Sample Inputs"));
+        fireEvent.click(screen.getByText("Manual Layout"));
 
         // Finally, test that the ErrorBoundary message doesn't appear, and that the canvas is reappearing after resetting
         await waitFor(
@@ -116,6 +105,9 @@ describe("App", () => {
                 expect(screen.queryByTestId("failure-banner")).toBeNull();
             },
             { timeout: 2000 }
+        );
+        expect((input as HTMLTextAreaElement).value).toEqual(
+            expect.stringContaining("David is cool!")
         );
         expect(screen.getByTestId("memory-models-canvas")).toBeTruthy();
         spy.mockRestore();
