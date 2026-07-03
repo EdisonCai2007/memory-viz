@@ -30,11 +30,9 @@ type MemoryModelsConfigInputPropTypes = {
 };
 
 type MemoryModelsFileInputPropTypes = {
-    setTextData: React.Dispatch<React.SetStateAction<string>>;
+    onSubmit: (textData: string) => void;
     textData: string;
     setFailureBanner: React.Dispatch<React.SetStateAction<string>>;
-    queueDebouncedTextData: (textData: string) => void;
-    flushDebouncedTextData: () => void;
 };
 
 type MemoryModelsTextInputPropTypes = {
@@ -72,16 +70,12 @@ function MemoryModelsFileInput(props: MemoryModelsFileInputPropTypes) {
         } catch (error) {
             const errorMessage = `${t("errors.fileReading")} ${error.message}`;
             console.error(errorMessage);
-            props.setTextData(null);
-            props.setFailureBanner(errorMessage);
         }
     };
 
     const onLoadButtonClick = () => {
-        props.setTextData(uploadedFileString);
         setOpen(false);
-        props.queueDebouncedTextData(uploadedFileString);
-        props.flushDebouncedTextData();
+        props.onSubmit(uploadedFileString);
     };
 
     return (
@@ -236,17 +230,13 @@ export default function MemoryModelsUserInput(
             <Stack spacing={2}>
                 <MemoryModelsFileInput
                     textData={props.textData}
-                    setTextData={props.setTextData}
                     setFailureBanner={props.setFailureBanner}
-                    queueDebouncedTextData={props.queueDebouncedTextData}
-                    flushDebouncedTextData={props.flushDebouncedTextData}
+                    onSubmit={props.onSubmit}
                 />
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                     <MemoryModelsSample
-                        setTextData={props.setTextData}
                         setConfigData={props.setConfigData}
-                        queueDebouncedTextData={props.queueDebouncedTextData}
-                        flushDebouncedTextData={props.flushDebouncedTextData}
+                        onSubmit={props.onSubmit}
                     />
                     <MemoryModelsConfigInput
                         configData={props.configData}
