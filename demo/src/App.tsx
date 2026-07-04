@@ -63,17 +63,20 @@ export default function App({ isDarkMode, toggleTheme }: AppProps) {
         }
     }, [debouncedTextData]);
 
-    const onSubmit = (textData: string) => {
-        try {
-            setTextData(textData);
-            debouncedControls(textData);
-            debouncedControls.flush();
-        } catch (error) {
-            const errorMessage = `Error parsing inputted JSON: ${error.message}`;
-            console.error(errorMessage);
-            setTextData(null);
-            setFailureBanner(errorMessage);
+    const onInputChange = (textData: string, config?: configDataPropTypes) => {
+        if (config) {
+            setConfigData((prevConfigData) => ({
+                ...prevConfigData,
+                ...config,
+                overallDrawConfig: {
+                    ...prevConfigData?.overallDrawConfig,
+                    ...config?.overallDrawConfig,
+                },
+            }));
         }
+        setTextData(textData);
+        debouncedControls(textData);
+        debouncedControls.flush();
     };
 
     return (
@@ -92,7 +95,7 @@ export default function App({ isDarkMode, toggleTheme }: AppProps) {
                         failureBanner={failureBanner}
                         setFailureBanner={setFailureBanner}
                         isValidJson={isValidJson}
-                        onSubmit={onSubmit}
+                        onInputChange={onInputChange}
                     />
                 </Box>
                 <Box sx={{ width: "60%" }}>

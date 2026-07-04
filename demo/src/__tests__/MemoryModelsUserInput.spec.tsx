@@ -37,7 +37,7 @@ describe("MemoryModelsUserInput", () => {
                     failureBanner={failureBannerMock}
                     configData={configDataMock}
                     setConfigData={setConfigDataMock}
-                    onSubmit={onSubmitMock}
+                    onInputChange={onSubmitMock}
                 />
             )
         );
@@ -56,7 +56,7 @@ describe("MemoryModelsUserInput", () => {
                     failureBanner={failureBannerMock}
                     configData={configDataMock}
                     setConfigData={setConfigDataMock}
-                    onSubmit={onSubmitMock}
+                    onInputChange={onSubmitMock}
                 />
             )
         );
@@ -75,7 +75,7 @@ describe("MemoryModelsUserInput", () => {
                     failureBanner={failureBannerMock}
                     configData={configDataMock}
                     setConfigData={setConfigDataMock}
-                    onSubmit={onSubmitMock}
+                    onInputChange={onSubmitMock}
                 />
             )
         );
@@ -99,7 +99,7 @@ describe("MemoryModelsUserInput", () => {
                         failureBanner={failureBannerMock}
                         configData={configDataMock}
                         setConfigData={setConfigDataMock}
-                        onSubmit={onSubmitMock}
+                        onInputChange={onSubmitMock}
                     />
                 )
             );
@@ -122,7 +122,7 @@ describe("MemoryModelsUserInput", () => {
                         failureBanner={failureBannerMock}
                         configData={configDataMock}
                         setConfigData={setConfigDataMock}
-                        onSubmit={onSubmitMock}
+                        onInputChange={onSubmitMock}
                     />
                 )
             );
@@ -265,7 +265,7 @@ describe("MemoryModelsUserInput", () => {
                         failureBanner={failureBannerMock}
                         configData={configDataMock}
                         setConfigData={setConfigDataMock}
-                        onSubmit={onSubmitMock}
+                        onInputChange={onSubmitMock}
                     />
                 )
             );

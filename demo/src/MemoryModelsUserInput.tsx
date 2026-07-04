@@ -30,7 +30,7 @@ type MemoryModelsConfigInputPropTypes = {
 };
 
 type MemoryModelsFileInputPropTypes = {
-    onSubmit: (textData: string) => void;
+    onInputChange: (textData: string, config?: configDataPropTypes) => void;
     textData: string;
     setFailureBanner: React.Dispatch<React.SetStateAction<string>>;
 };
@@ -75,7 +75,7 @@ function MemoryModelsFileInput(props: MemoryModelsFileInputPropTypes) {
 
     const onLoadButtonClick = () => {
         setOpen(false);
-        props.onSubmit(uploadedFileString);
+        props.onInputChange(uploadedFileString);
     };
 
     return (
@@ -231,13 +231,10 @@ export default function MemoryModelsUserInput(
                 <MemoryModelsFileInput
                     textData={props.textData}
                     setFailureBanner={props.setFailureBanner}
-                    onSubmit={props.onSubmit}
+                    onInputChange={props.onInputChange}
                 />
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                    <MemoryModelsSample
-                        setConfigData={props.setConfigData}
-                        onSubmit={props.onSubmit}
-                    />
+                    <MemoryModelsSample onInputChange={props.onInputChange} />
                     <MemoryModelsConfigInput
                         configData={props.configData}
                         setConfigData={props.setConfigData}

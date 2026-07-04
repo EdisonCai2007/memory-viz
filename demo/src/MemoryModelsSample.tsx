@@ -7,28 +7,18 @@ import { configDataPropTypes } from "./MemoryModelsUserInput.jsx";
 import { SAMPLES } from "./sample/index.js";
 
 type MemoryModelsSamplePropTypes = {
-    onSubmit: (textData: string) => void;
-    setConfigData: React.Dispatch<React.SetStateAction<configDataPropTypes>>;
+    onInputChange: (textData: string, config?: configDataPropTypes) => void;
 };
 
 export default function MemoryModelsSample(props: MemoryModelsSamplePropTypes) {
     const { t } = useTranslation();
 
     const handleButtonClick = (sample: object) => {
-        props.setConfigData((prevConfigData) => ({
-            ...prevConfigData,
-            ...sample["config"],
-            overallDrawConfig: {
-                ...prevConfigData?.overallDrawConfig,
-                ...sample["config"]?.overallDrawConfig,
-            },
-        }));
-
         // Note: the following conversion to a string is inefficient, as the data is later parsed
         // back into JSON for rendering.
         // TODO: fix this.
         const sampleTextData = JSON.stringify(sample["data"], null, 4);
-        props.onSubmit(sampleTextData);
+        props.onInputChange(sampleTextData, sample["config"]);
     };
 
     return (

@@ -18,21 +18,12 @@ const { SAMPLES } = await import("../sample/index.js");
 import { renderWithI18n } from "../setup-jest";
 
 describe("MemoryModelsSample", () => {
-    const onSubmitMock = jest.fn();
-    let nextState;
-    let setConfigDataMock;
+    const onInputChangeMock = jest.fn();
 
     beforeEach(() => {
-        setConfigDataMock = jest.fn().mockImplementation((callback) => {
-            nextState = callback({ config: "config" });
-        });
-
         render(
             renderWithI18n(
-                <MemoryModelsSample
-                    setConfigData={setConfigDataMock}
-                    onSubmit={onSubmitMock}
-                />
+                <MemoryModelsSample onInputChange={onInputChangeMock} />
             )
         );
     });
@@ -63,13 +54,10 @@ describe("MemoryModelsSample", () => {
 
         // Wait for state updates and side effects to complete
         await waitFor(() => {
-            expect(onSubmitMock).toHaveBeenCalledWith(
-                JSON.stringify({ sample: "manualLayout" }, null, 4)
+            expect(onInputChangeMock).toHaveBeenCalledWith(
+                JSON.stringify({ sample: "manualLayout" }, null, 4),
+                { config: "config", overallDrawConfig: {} }
             );
-            expect(nextState).toEqual({
-                config: "config",
-                overallDrawConfig: {},
-            });
         });
     });
 });
