@@ -11,14 +11,13 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### ✨ Enhancements
 
-- Added optional `startLineNumber` variable for custom line numbers, defaulting to first element of `memoryVizData` if not set
-
 ### 🐛 Bug fixes
 
 ### 📚 Documentation changes
 
 ### 🔧 Internal changes
 
+- Added optional `startLineNumber` variable for custom line numbers, defaulting to first element of `memoryVizData` if not set
 - Removed the unused `automation` parameter when calling the draw function
 
 ## [0.9.1] - 2026-06-11
