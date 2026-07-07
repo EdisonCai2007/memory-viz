@@ -11,6 +11,7 @@ import placeholder from "./placeholder.js";
 if (typeof window === "object" && process.env.NODE_ENV !== "production") {
     window.codeText = placeholder.codeText;
     window.memoryVizData = placeholder.jsonArray;
+    window.startLineNumber = placeholder.startLineNumber;
 }
 
 interface AppProps {
@@ -76,9 +77,7 @@ export default function App({ isDarkMode, toggleTheme }: AppProps) {
                         <Box className="code-display">
                             <CodeDisplay
                                 text={codeText}
-                                startingLineNumber={
-                                    window.memoryVizData[0].lineNumber
-                                }
+                                startingLineNumber={window.startLineNumber}
                                 highlightLine={
                                     window.memoryVizData[step].lineNumber
                                 }
