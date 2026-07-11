@@ -12,6 +12,7 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### ✨ Enhancements
 
 - Added optional `startLineNumber` variable for custom line numbers, defaulting to first element of `memoryVizData` if not set
+- Removed line wrap and added a horizontal scrollbar for overflowing text to `CodeDisplay`
 
 ### 🐛 Bug fixes
 
