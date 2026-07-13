@@ -19,6 +19,7 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### 📚 Documentation and demo website changes
 
+- Added resizable panels to the demo website using the new `react-resizable-panels` dependency
 - Updated demo website to combine error messages into one banner located under the user input box
 - Removed "Draw Diagram" button from demo website and added automatic memory model rendering
 - Updated `memory-viz/docs/docs/03-automation_algorithms.md` to reflect current algorithm used by Memory Viz
