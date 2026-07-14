@@ -4,7 +4,13 @@ import rough from "roughjs";
 
 import merge from "deepmerge";
 
-import { collections, immutable, presets, setStyleSheet } from "./style.js";
+import {
+    collections,
+    DIAGRAM_CLASS,
+    immutable,
+    presets,
+    setStyleSheet,
+} from "./style.js";
 import { config } from "./config.js";
 import { DOMImplementation, XMLSerializer } from "@xmldom/xmldom";
 import {
@@ -106,11 +112,19 @@ export class MemoryModel {
         this.roughjs_config = options.roughjs_config ?? {};
         this.rough_svg = rough.svg(this.svg, this.roughjs_config);
 
+        // scope the styling to the diagram so that it does not leak onto unrelated content
+        this.svg.setAttribute("class", DIAGRAM_CLASS);
+
+        // ensures the SVG scales to fit its container
+        this.svg.setAttribute("preserveAspectRatio", "xMinYMin meet");
+        this.svg.setAttribute("style", "width:100%;height:100%");
+
         // The user must not directly use this constructor; their only interaction should be with 'user_functions.draw'.
         for (const key in config) {
+            const optionValue = options[key as keyof VisualizationConfig];
             (this as { [key: string]: any })[key] =
-                Object.prototype.hasOwnProperty.call(options, key)
-                    ? options[key as keyof VisualizationConfig]
+                optionValue !== undefined
+                    ? optionValue
                     : config[key as keyof typeof config];
         }
 
@@ -1455,6 +1469,9 @@ export class MemoryModel {
             this.height = bottom_edge;
             this.svg.setAttribute("height", this.height.toString());
         }
+
+        // prevents the SVG from being cropped when a CSS width/height is applied
+        this.svg.setAttribute("viewBox", `0 0 ${this.width} ${this.height}`);
     }
 
     /**
@@ -2120,7 +2137,44 @@ export class MemoryModel {
     }
 
     /**
+     * Attach real hover-highlight listeners to a live SVG element
+     * Necessary because <script> tags embedded via setInteractivityScript()
+     * never execute once parsed/inserted this way.
+     * NOTE: duplicates the highlighting logic in setInteractivityScript()'s
+     * embedded script; keep the two in sync.
+     * @param svgElement - the live SVG element to attach listeners to
+     */
+    attachInteractivity(svgElement: SVGSVGElement): void {
+        svgElement.querySelectorAll("text.id").forEach((idText) => {
+            const textNode = Array.from(idText.childNodes).find(
+                (node) => node.nodeType === Node.TEXT_NODE
+            );
+            const idValue = textNode?.nodeValue?.trim() ?? "";
+            const objectIds = this.idToObjectMap.get(idValue);
+            if (!objectIds) {
+                return;
+            }
+            idText.addEventListener("mouseover", () => {
+                objectIds.forEach((objectId) => {
+                    svgElement
+                        .querySelector(`#${objectId}`)
+                        ?.classList.add("highlighted");
+                });
+            });
+            idText.addEventListener("mouseout", () => {
+                objectIds.forEach((objectId) => {
+                    svgElement
+                        .querySelector(`#${objectId}`)
+                        ?.classList.remove("highlighted");
+                });
+            });
+        });
+    }
+
+    /**
      * Add hover interactivity to the SVG on object IDs
+     * NOTE: duplicates the highlighting logic in attachInteractivity(); keep
+     * the two in sync.
      */
     setInteractivityScript(): void {
         const idToObjectMapping = Object.fromEntries(this.idToObjectMap);
