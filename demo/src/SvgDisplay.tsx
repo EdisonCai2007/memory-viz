@@ -2,7 +2,11 @@ import React, { useRef, useEffect } from "react";
 import memoryViz from "../../memory-viz/src"; // Load local version of memory-viz
 import { Paper } from "@mui/material";
 import type { configDataPropTypes } from "./MemoryModelsUserInput.js";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import {
+    TransformWrapper,
+    TransformComponent,
+    type ReactZoomPanPinchContentRef,
+} from "react-zoom-pan-pinch";
 
 const { draw: drawMemoryModel } = memoryViz;
 
@@ -19,9 +23,9 @@ export default function SvgDisplay({
     isDarkMode = false,
     ...props
 }: SvgDisplayPropTypes) {
-    const canvasRef = useRef(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const transformRef = useRef<ReactZoomPanPinchContentRef>(null);
     const canvasWidth = 1300;
-    const canvasHeight = 1000;
 
     const rawTheme = props.configData.overallDrawConfig?.theme;
 
@@ -42,11 +46,22 @@ export default function SvgDisplay({
                     width: canvasWidth,
                     ...(resolvedTheme ? { theme: resolvedTheme } : {}),
                 });
-                props.setSvgResult(m.serializeSVG());
+
+                const svgString = m.serializeSVG();
+                props.setSvgResult(svgString);
                 props.setFailureBanner("");
                 props.setIsValidJson(true);
-                m.clear(canvasRef.current);
-                m.render(canvasRef.current);
+
+                const svgElement = new DOMParser().parseFromString(
+                    svgString,
+                    "image/svg+xml"
+                ).documentElement as unknown as SVGSVGElement;
+                containerRef.current.replaceChildren(svgElement);
+
+                m.attachInteractivity(svgElement);
+
+                // reset zoom and pan to default when redrawing
+                transformRef.current?.setTransform(0, 0, 1, 0);
             } catch (error) {
                 props.setSvgResult(null);
                 props.setFailureBanner(error.message);
@@ -84,19 +99,20 @@ export default function SvgDisplay({
             variant="outlined"
         >
             <TransformWrapper
+                ref={transformRef}
                 minScale={0.2}
                 wheel={{ step: 0.2, smoothStep: 0.01 }}
             >
-                <TransformComponent>
-                    <canvas
+                <TransformComponent
+                    wrapperStyle={{ width: "100%", height: "100%" }}
+                >
+                    <div
+                        data-testid="memory-models-svg"
+                        ref={containerRef}
                         style={{
                             height: "100%",
                             width: "100%",
                         }}
-                        data-testid="memory-models-canvas"
-                        ref={canvasRef}
-                        width={canvasWidth}
-                        height={canvasHeight}
                     />
                 </TransformComponent>
             </TransformWrapper>

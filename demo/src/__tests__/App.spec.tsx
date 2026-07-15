@@ -109,7 +109,7 @@ describe("App", () => {
         expect((input as HTMLTextAreaElement).value).toEqual(
             expect.stringContaining("David is cool!")
         );
-        expect(screen.getByTestId("memory-models-canvas")).toBeTruthy();
+        expect(screen.getByTestId("memory-models-svg")).toBeTruthy();
         spy.mockRestore();
     });
 
