@@ -55,11 +55,7 @@ export default function App({ isDarkMode, toggleTheme }: AppProps) {
             <Header isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
             <main className="container-fluid">
                 <Group orientation="horizontal">
-                    <Panel
-                        className="code-pane"
-                        defaultSize="45%"
-                        minSize="25%"
-                    >
+                    <Panel className="code-pane" defaultSize="45%">
                         <Stack direction="column" sx={{ height: "100%" }}>
                             <Typography variant="h2" color="textPrimary">
                                 {t("code.title")}
@@ -99,7 +95,7 @@ export default function App({ isDarkMode, toggleTheme }: AppProps) {
                         </Stack>
                     </Panel>
                     <Separator className="separator" disableDoubleClick />
-                    <Panel className="svg-pane" defaultSize="55%" minSize="25%">
+                    <Panel className="svg-pane" defaultSize="55%">
                         <Stack direction="column" sx={{ height: "100%" }}>
                             <Typography variant="h2" color="textPrimary">
                                 {t("memory.title")}

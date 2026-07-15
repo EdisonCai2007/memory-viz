@@ -84,7 +84,7 @@ export default function App({ isDarkMode, toggleTheme }: AppProps) {
         <main className="container">
             <Header isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
             <Group orientation="horizontal">
-                <Panel className="input-pane" defaultSize="40%" minSize="35%">
+                <Panel className="input-pane" defaultSize="40%">
                     <Typography variant="h2" color="textPrimary">
                         {t("input.title")}
                     </Typography>
@@ -100,7 +100,7 @@ export default function App({ isDarkMode, toggleTheme }: AppProps) {
                     />
                 </Panel>
                 <Separator className="separator" disableDoubleClick />
-                <Panel className="result-pane" defaultSize="60%" minSize="25%">
+                <Panel className="result-pane" defaultSize="60%">
                     <Typography variant="h2" color="textPrimary">
                         {t("output.title")}
                     </Typography>
