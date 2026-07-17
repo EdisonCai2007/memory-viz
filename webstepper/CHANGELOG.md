@@ -12,9 +12,6 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### ✨ Enhancements
 
 - Added resizable panels using the new `react-resizable-panels` dependency
-- Added optional `startLineNumber` variable for custom line numbers, defaulting to first element of `memoryVizData` if not set
-- Removed line wrap and added a horizontal scrollbar for overflowing text to `CodeDisplay`
-- Replaced canvas rendering with live SVG in `SvgDisplay.tsx`, adding box highlighting when the user hovers over object IDs
 
 ### 🐛 Bug fixes
 

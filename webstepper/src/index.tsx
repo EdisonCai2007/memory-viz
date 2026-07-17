@@ -132,7 +132,6 @@ function Root() {
         });
 
     const theme = isDarkMode ? darkTheme : lightTheme;
-
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
