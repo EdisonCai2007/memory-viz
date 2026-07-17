@@ -15,6 +15,8 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### 📚 Documentation and demo website changes
 
+- Added resizable panels to the demo website using the new `react-resizable-panels` dependency
+
 ### 🔧 Internal changes
 
 ## [0.10.0] - 2026-07-15
