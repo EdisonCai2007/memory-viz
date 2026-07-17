@@ -22,6 +22,16 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### 🔧 Internal changes
 
+## [0.10.0] - 2026-07-15
+
+### ✨ Enhancements
+
+- Added optional `startLineNumber` variable for custom line numbers, defaulting to first element of `memoryVizData` if not set
+- Removed line wrap and added a horizontal scrollbar for overflowing text to `CodeDisplay`
+- Replaced canvas rendering with live SVG in `SvgDisplay.tsx`, adding box highlighting when the user hovers over object IDs
+
+### 🔧 Internal changes
+
 - Removed the unused `automation` parameter when calling the draw function
 
 ## [0.9.1] - 2026-06-11
