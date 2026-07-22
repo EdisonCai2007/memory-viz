@@ -15,6 +15,8 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### 🐛 Bug fixes
 
+- Changed `SvgDisplay` zooming to match new `react-zoom-pan-pinch` library updates
+
 ### 📚 Documentation changes
 
 ### 🔧 Internal changes
