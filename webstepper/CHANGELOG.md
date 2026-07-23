@@ -15,6 +15,8 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### 🐛 Bug fixes
 
+- Removed an auto-centering bug within `SvgDisplay`
+
 ### 📚 Documentation changes
 
 ### 🔧 Internal changes

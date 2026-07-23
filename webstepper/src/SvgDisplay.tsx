@@ -61,7 +61,6 @@ export default function SvgDisplay(props: SvgDisplayPropTypes) {
         >
             <TransformWrapper
                 ref={transformRef}
-                centerZoomedOut={true}
                 minScale={0.2}
                 wheel={{ step: 0.2, smoothStep: 0.01 }}
             >
