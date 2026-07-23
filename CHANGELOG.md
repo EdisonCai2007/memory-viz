@@ -15,10 +15,13 @@ and adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### 📚 Documentation and demo website changes
 
+- Changed `SvgDisplay` zooming to match the props of `react-zoom-pan-pinch` v4.0.0
 - Removed line wrap and added a horizontal scrollbar for overflowing text to `MemoryModelsTextInput`
 - Added resizable panels to the demo website using the new `react-resizable-panels` dependency
 
 ### 🔧 Internal changes
+
+- Added `data-memory-viz-object-id` as a data attribute to each object's `<g>` tag and refactored `memory_model.ts` to remove the use of `idToObjectMap` attribute, replacing it with with separate Javascript code within the interactivity logic that dynamically builds the object ID map
 
 ## [0.10.0] - 2026-07-15
 

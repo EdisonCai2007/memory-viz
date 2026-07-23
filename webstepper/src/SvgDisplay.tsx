@@ -62,7 +62,8 @@ export default function SvgDisplay(props: SvgDisplayPropTypes) {
             <TransformWrapper
                 ref={transformRef}
                 minScale={0.2}
-                wheel={{ step: 0.2, smoothStep: 0.01 }}
+                smooth={true}
+                wheel={{ step: 0.001 }}
             >
                 <TransformComponent
                     wrapperStyle={{ width: "100%", height: "100%" }}
